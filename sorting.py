@@ -12,12 +12,14 @@ def selection_sort(numbers, count, yield_state=False):
             count["comparisons"] += 1
             if numbers[j] < numbers[m]:
                 m = j
+            
+            if yield_state:
+                time.sleep(0.02)
+                yield numbers
         
         numbers[i], numbers[m] = numbers[m], numbers[i]
         count["swaps"] += 1
-        if yield_state:
-            time.sleep(0.05)
-            yield numbers
+            
 
 def insertion_sort(numbers, count, yield_state=False):
     n = len(numbers)
@@ -34,14 +36,17 @@ def insertion_sort(numbers, count, yield_state=False):
                 numbers[j + 1] = numbers[j]
                 count["swaps"] += 1
                 j -= 1
+
+                if yield_state:
+                    time.sleep(0.02)
+                    yield numbers
+
             else:
                 break
         
         numbers[j + 1] = key
         count["swaps"] += 1
-        if yield_state:
-            time.sleep(0.05)
-            yield numbers
+
 
 def bubble_sort(numbers, count, yield_state=False):
     n = len(numbers)
@@ -54,9 +59,9 @@ def bubble_sort(numbers, count, yield_state=False):
             if numbers[j] > numbers[j + 1]:
                 numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
                 count["swaps"] += 1
-        if yield_state:
-            time.sleep(0.05)
-            yield numbers
+            if yield_state:
+                time.sleep(0.02)
+                yield numbers
 
 
 def shell_insertion_logic(numbers, count, gaps, yield_state=False):
@@ -74,13 +79,19 @@ def shell_insertion_logic(numbers, count, gaps, yield_state=False):
                     numbers[j + gap] = numbers[j]
                     count["swaps"] += 1
                     j -= gap
+
+                    if yield_state:
+                        time.sleep(0.02)
+                        yield numbers
+
                 else:
                     break
             numbers[j + gap] = key
             count["swaps"] += 1
-        if yield_state:
-            time.sleep(0.05)
-            yield numbers
+            if yield_state:
+                time.sleep(0.02)
+                yield numbers
+
 
 def shell_bubble_logic(numbers, count, gaps, yield_state=False):
     n = len(numbers)
@@ -94,9 +105,10 @@ def shell_bubble_logic(numbers, count, gaps, yield_state=False):
                 if numbers[j] > numbers[j + gap]:
                     numbers[j], numbers[j + gap] = numbers[j + gap], numbers[j]
                     count["swaps"] += 1
-        if yield_state:
-            time.sleep(0.05)
-            yield numbers
+                if yield_state:
+                    time.sleep(0.02)
+                    yield numbers
+
 
 # Helper to generate gap sequences
 def get_gaps(n, method, custom_gaps=None):
