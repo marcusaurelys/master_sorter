@@ -30,22 +30,24 @@ def insertion_sort(numbers, count, yield_state=False):
         key = numbers[i]
         j = i - 1
         
-        while j >= 0:
+        while j >= 0 and key < numbers[j]:
             count["comparisons"] += 1
-            if key < numbers[j]:
-                numbers[j + 1] = numbers[j]
-                count["swaps"] += 1
-                j -= 1
+            numbers[j + 1] = numbers[j]
+            count["swaps"] += 1
+            j -= 1
 
-                if yield_state:
-                    time.sleep(0.02)
-                    yield numbers
+            if yield_state:
+                time.sleep(0.02)
+                yield numbers
 
-            else:
-                break
         
+
         numbers[j + 1] = key
         count["swaps"] += 1
+        if yield_state:
+                time.sleep(0.02)
+                yield numbers
+        
 
 
 def bubble_sort(numbers, count, yield_state=False):
