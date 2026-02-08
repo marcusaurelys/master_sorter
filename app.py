@@ -5,7 +5,7 @@ import plotly.express as px
 import time
 from sorting import (
     bubble_sort, insertion_sort, selection_sort,
-    shell_insertion_logic, shell_bubble_logic, get_gaps
+    shell_insertion_logic, shell_bubble_logic, shell_selection_logic, get_gaps
 )
 
 st.set_page_config(page_title="Algorithm Growth Rate Analyzer", layout="wide")
@@ -66,14 +66,14 @@ else:
 st.sidebar.header("2. Algorithm Selection")
 algos = st.sidebar.multiselect("Select Algorithms:", [
     "Bubble Sort", "Insertion Sort", "Selection Sort",
-    "Shell Sort (N/2^k)", "Shell Bubble Sort (N/2^k)",
-    "Shell Sort (Hibbard)", "Shell Bubble Sort (Hibbard)",
-    "Shell Sort (Knuth)", "Shell Insertion Sort (Knuth)",
-    "Custom Shell Sort", "Custom Shell Bubble Sort"
+    "Shell Sort (N/2^k)", "Shell Bubble Sort (N/2^k)", "Shell Selection Sort (N/2^k)",
+    "Shell Sort (Hibbard)", "Shell Bubble Sort (Hibbard)", "Shell Selection Sort (Hibbard)",
+    "Shell Sort (Knuth)", "Shell Bubble Sort (Knuth)", "Shell Selection Sort (Knuth)",
+    "Custom Shell Sort", "Custom Shell Bubble Sort", "Custom Shell Selection Sort"
 ])
 
 custom_gaps_input = []
-if "Custom Shell Sort" in algos or "Custom Shell Bubble Sort" in algos:
+if "Custom Shell Sort" in algos or "Custom Shell Bubble Sort" in algos or "Custom Shell Selection Sort" in algos:
     g_str = st.sidebar.text_input("Custom Gaps (e.g. 5, 3, 1)", "5, 2, 1")
     custom_gaps_input = [int(x.strip()) for x in g_str.split(",") if x.strip()]
 
@@ -119,6 +119,8 @@ if st.button("🚀 Run Analysis"):
                     
                     if "Bubble" in algo_name:
                         list(shell_bubble_logic(subset, count, gaps))
+                    elif "Selection" in algo_name:
+                        list(shell_selection_logic(subset, count, gaps))
                     else:
                         list(shell_insertion_logic(subset, count, gaps))
                 

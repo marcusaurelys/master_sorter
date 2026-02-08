@@ -112,6 +112,25 @@ def shell_bubble_logic(numbers, count, gaps, yield_state=False):
                     yield numbers
 
 
+def shell_selection_logic(numbers, count, gaps, yield_state=False):
+    n = len(numbers)
+    count.setdefault("comparisons", 0)
+    count.setdefault("swaps", 0)
+
+    for gap in gaps:
+        for i in range(n):
+            m = i
+            for j in range(i+gap, n, gap):
+                count["comparisons"]+=1
+                if numbers[j] < numbers[i]:
+                    m = j
+            numbers[i], numbers[m] = numbers[m], numbers[i]
+            count["swaps"]+=1
+            if yield_state:
+                time.sleep(0.02)
+                yield numbers
+
+
 # Helper to generate gap sequences
 def get_gaps(n, method, custom_gaps=None):
     if method == "shell": # N/2^k
